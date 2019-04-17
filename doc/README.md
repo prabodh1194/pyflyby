@@ -19,59 +19,59 @@ For editing python source code:
 Quick start: Autoimporter + IPython
 ===================================
 
-  $ py
-      In [1]: re.search("[a-z]+", "....hello...").group(0)
-      [PYFLYBY] import re
-      Out[1]: 'hello'
+    $ py
+    In [1]: re.search("[a-z]+", "....hello...").group(0)
+    [PYFLYBY] import re
+    Out[1]: 'hello'
 
-      In [2]: chisqprob(arange(5), 2)
-      [PYFLYBY] from numpy import arange
-      [PYFLYBY] from scipy.stats import chisqprob
-      Out[2]: [ 1.      0.6065  0.3679  0.2231  0.1353]
+    In [2]: chisqprob(arange(5), 2)
+    [PYFLYBY] from numpy import arange
+    [PYFLYBY] from scipy.stats import chisqprob
+    Out[2]: [ 1.      0.6065  0.3679  0.2231  0.1353]
 
 To load pyflyby into an existing IPython session as a 1-off:
 
-  $ ipython
-      In [1]: %load_ext pyflyby
+    $ ipython
+    In [1]: %load_ext pyflyby
 
 To configure IPython/Jupyter Notebook to load pyflyby automatically:
 
-  $ py pyflyby.install_in_ipython_config_file
-     or
-  $ echo 'c.InteractiveShellApp.extensions.append("pyflyby")' \
-      >> ~/.ipython/profile_default/ipython_config.py
+    $ py pyflyby.install_in_ipython_config_file
+    or
+    $ echo 'c.InteractiveShellApp.extensions.append("pyflyby")' \
+    >> ~/.ipython/profile_default/ipython_config.py
 
-  $ ipython
-      In [1]: b64decode('aGVsbG8=')
-      [PYFLYBY] from base64 import b64decode
-      Out[1]: 'hello'
+    $ ipython
+    In [1]: b64decode('aGVsbG8=')
+    [PYFLYBY] from base64 import b64decode
+    Out[1]: 'hello'
 
 
 Quick start: command-line multi-tool
 ====================================
 
-  $ py b64decode aGVsbG8=
-  [PYFLYBY] from base64 import b64decode
-  [PYFLYBY] b64decode('aGVsbG8=', altchars=None)
-  'hello'
+    $ py b64decode aGVsbG8=
+    [PYFLYBY] from base64 import b64decode
+    [PYFLYBY] b64decode('aGVsbG8=', altchars=None)
+    'hello'
 
-  $ py log2 sys.maxint
-  [PYFLYBY] from numpy import log2
-  [PYFLYBY] import sys
-  [PYFLYBY] log2(9223372036854775807)
-  63.0
+    $ py log2 sys.maxint
+    [PYFLYBY] from numpy import log2
+    [PYFLYBY] import sys
+    [PYFLYBY] log2(9223372036854775807)
+    63.0
 
-  $ py 'plot(cos(arange(30)))'
-  [PYFLYBY] from numpy import arange
-  [PYFLYBY] from numpy import cos
-  [PYFLYBY] from matplotlib.pyplot import plot
-  [PYFLYBY] plot(cos(arange(30)))
-  <plot>
+    $ py 'plot(cos(arange(30)))'
+    [PYFLYBY] from numpy import arange
+    [PYFLYBY] from numpy import cos
+    [PYFLYBY] from matplotlib.pyplot import plot
+    [PYFLYBY] plot(cos(arange(30)))
+    <plot>
 
-  $ py 38497631 / 13951446
-  2.7594007818257693
+    $ py 38497631 / 13951446
+    2.7594007818257693
 
-  $ py foo.py
+    $ py foo.py
 
 Quick start: tidy-imports
 =========================
@@ -80,19 +80,19 @@ To use tidy-imports, just specify the filename(s) to tidy.
 
 For example:
 
-$ echo 're.search("[a-z]+", "....hello..."), chisqprob(arange(5), 2)' > foo.py
+    $ echo 're.search("[a-z]+", "....hello..."), chisqprob(arange(5), 2)' > foo.py
 
-$ tidy-imports foo.py
-    --- /tmp/foo.py
-    +++ /tmp/foo.py
-    @@ -1 +1,9 @@
-    +from __future__ import absolute_import, division, with_statement
-    +
-    +from   numpy                    import arange
-    +from   scipy.stats              import chisqprob
-    +import re
-    +
-     re.search("[a-z]+", "....hello..."), chisqprob(arange(5), 2)
+    $ tidy-imports foo.py
+        --- /tmp/foo.py
+        +++ /tmp/foo.py
+        @@ -1 +1,9 @@
+        +from __future__ import absolute_import, division, with_statement
+        +
+        +from   numpy                    import arange
+        +from   scipy.stats              import chisqprob
+        +import re
+        +
+         re.search("[a-z]+", "....hello..."), chisqprob(arange(5), 2)
 
     Replace /tmp/foo.py? [y/N]
 
@@ -101,11 +101,12 @@ Quick start: import libraries
 =============================
 
 Create a file named .pyflyby with lines such as::
-    from mypackage.mymodule import MyClass, my_function
+    
+	from mypackage.mymodule import MyClass, my_function
     import anotherpackage.anothermodule
 
 You can put this file in your home directory or in the same directory as your
-*.py files.
+`*.py` files.
 
 
 Details: automatic imports
@@ -120,23 +121,23 @@ occasionally).
 
 Example:
 
-  In [1]: re.search("[a-z]+", "....hello...").group(0)
-  [PYFLYBY] import re
-  Out[1]: 'hello'
-
-  In [2]: chisqprob(arange(5), 2)
-  [PYFLYBY] from numpy import arange
-  [PYFLYBY] from scipy.stats import chisqprob
-  Out[2]: [ 1.      0.6065  0.3679  0.2231  0.1353]
-
-  In [3]: np.sin(arandom(5))
-  [PYFLYBY] from numpy.random import random as arandom
-  [PYFLYBY] import numpy as np
-  Out[3]: [ 0.0282  0.0603  0.4653  0.8371  0.3347]
-
-  In [4]: isinstance(42, Number)
-  [PYFLYBY] from numbers import Number
-  Out[4]: True
+    In [1]: re.search("[a-z]+", "....hello...").group(0)
+    [PYFLYBY] import re
+    Out[1]: 'hello'
+    
+    In [2]: chisqprob(arange(5), 2)
+    [PYFLYBY] from numpy import arange
+    [PYFLYBY] from scipy.stats import chisqprob
+    Out[2]: [ 1.      0.6065  0.3679  0.2231  0.1353]
+    
+    In [3]: np.sin(arandom(5))
+    [PYFLYBY] from numpy.random import random as arandom
+    [PYFLYBY] import numpy as np
+    Out[3]: [ 0.0282  0.0603  0.4653  0.8371  0.3347]
+    
+    In [4]: isinstance(42, Number)
+    [PYFLYBY] from numbers import Number
+    Out[4]: True
 
 
 It just works
@@ -146,35 +147,35 @@ Tab completion works, even on modules that are not yet imported.  In the
 following example, notice that numpy is imported when we need to know its
 members, and only then:
 
-  $ ipython
-  In [1]: nump<TAB>
-  In [1]: numpy
-  In [1]: numpy.arang<TAB>
-  [PYFLYBY] import numpy
-  In [1]: numpy.arange
+    $ ipython
+    In [1]: nump<TAB>
+    In [1]: numpy
+    In [1]: numpy.arang<TAB>
+    [PYFLYBY] import numpy
+    In [1]: numpy.arange
 
 
 The IPython "?" magic help (pinfo/pinfo2) automatically imports symbols first
 if necessary:
 
-  $ ipython
-  In [1]: arange?
-  [PYFLYBY] from numpy import arange
-  ... Docstring: arange([start,] stop[, step,], dtype=None) ...
+    $ ipython
+    In [1]: arange?
+    [PYFLYBY] from numpy import arange
+    ... Docstring: arange([start,] stop[, step,], dtype=None) ...
 
 Other IPython magic commands work as well:
 
-  $ ipython
-  In [1]: %timeit np.cos(pi)
-  [PYFLYBY] import numpy as np
-  [PYFLYBY] from numpy import pi
-  100000 loops, best of 3: 2.51 us per loop
-
-  $ echo 'print arange(4)' > foo.py
-  $ ipython
-  In [1]: %run foo.py
-  [PYFLYBY] from numpy import arange
-  [0 1 2 3]
+    $ ipython
+    In [1]: %timeit np.cos(pi)
+    [PYFLYBY] import numpy as np
+    [PYFLYBY] from numpy import pi
+    100000 loops, best of 3: 2.51 us per loop
+    
+    $ echo 'print arange(4)' > foo.py
+    $ ipython
+    In [1]: %run foo.py
+    [PYFLYBY] from numpy import arange
+    [0 1 2 3]
 
 
 Implementation details
@@ -206,8 +207,8 @@ Details: import libraries
 
 Pyflyby uses "import libraries" that tell how to import a given symbol.
 
-An import library file is simply a python source file containing 'import' (or
-'from ... import ...') lines.  These can be generated automatically with
+An import library file is simply a python source file containing `import` (or
+`from ... import ...`) lines.  These can be generated automatically with
 collect-imports and collect-exports.
 
 Known imports
@@ -216,10 +217,14 @@ Known imports
 Find-imports, tidy-imports, and autoimport consult the database of known
 imports to figure out where to get an import.  For example, if the
 imports database contains::
+
     from numpy import arange, NaN
+
 then when you type the following in IPython::
+
     print arange(10)
-the autoimporter would automatically execute "from numpy import arange".
+
+the autoimporter would automatically execute `from numpy import arange`.
 
 The database can be one file or multiple files.  This makes it easy to have
 project-specific known_imports along with global and per-user defaults.
@@ -227,10 +232,13 @@ project-specific known_imports along with global and per-user defaults.
 The PYFLYBY_PATH environment variable specifies which files to read.
 This is a colon-separated list of filenames or directory names.  The default
 is:
-  PYFLYBY_PATH=/etc/pyflyby:~/.pyflyby:.../.pyflyby
+
+    PYFLYBY_PATH=/etc/pyflyby:~/.pyflyby:.../.pyflyby
 
 If you set
-  PYFLYBY_PATH=/foo1/bar1:/foo2/bar2
+
+    PYFLYBY_PATH=/foo1/bar1:/foo2/bar2
+
 then this replaces the default.
 
 You can use a hyphen to include the default in the path.  If you set
