@@ -242,31 +242,33 @@ If you set
 then this replaces the default.
 
 You can use a hyphen to include the default in the path.  If you set
-  PYFLYBY_PATH=/foo1/bar1:-:/foo2/bar2
-then this reads /foo1/bar1, then the default locations, then /foo2/bar2.
 
-In $PYFLYBY_PATH, ".../.pyflyby" (with _three_ dots) means that all ancestor
-directories are searched for a member named ".pyflyby".
+	PYFLYBY_PATH=/foo1/bar1:-:/foo2/bar2
+
+then this reads `/foo1/bar1`, then the default locations, then `/foo2/bar2`.
+
+In `$PYFLYBY_PATH`, `.../.pyflyby` (with _three_ dots) means that all ancestor
+directories are searched for a member named `.pyflyby`.
 
 For example, suppose the following files exist:
-  /etc/pyflyby/stuff.py
-  /u/quarl/.pyflyby/blah1.py
-  /u/quarl/.pyflyby/more/blah2.py
-  /proj/share/mypythonstuff/.pyflyby
-  /proj/share/mypythonstuff/foo/bar/.pyflyby/baz.py
-  /.pyflyby
+  * /etc/pyflyby/stuff.py
+  * /u/quarl/.pyflyby/blah1.py
+  * /u/quarl/.pyflyby/more/blah2.py
+  * /proj/share/mypythonstuff/.pyflyby
+  * /proj/share/mypythonstuff/foo/bar/.pyflyby/baz.py
+  * /.pyflyby
 
 Further, suppose:
   * /proj is on a separate file system from /.
   * $HOME=/u/quarl
 
-Then "tidy-imports /proj/share/mypythonstuff/foo/bar/quux/zot.py" will by
+Then `tidy-imports /proj/share/mypythonstuff/foo/bar/quux/zot.py` will by
 default use the following:
-  /etc/pyflyby/stuff.py
-  /u/quarl/.pyflyby/blah1.py
-  /u/quarl/.pyflyby/more/blah2.py
-  /proj/share/mypythonstuff/foo/bar/.pyflyby/baz.py
-  /proj/share/mypythonstuff/.pyflyby (a file)
+  *  /etc/pyflyby/stuff.py
+  *  /u/quarl/.pyflyby/blah1.py
+  *  /u/quarl/.pyflyby/more/blah2.py
+  *  /proj/share/mypythonstuff/foo/bar/.pyflyby/baz.py
+  *  /proj/share/mypythonstuff/.pyflyby (a file)
 
 Notes:
   * /.pyflyby is not included, because traversal stops at file system
